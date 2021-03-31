@@ -11,11 +11,6 @@ export default function Login() {
 
   const classes = useStyles();
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    setLoginOk(true);
-  };
-
   return (
     <div>
       <Header />
