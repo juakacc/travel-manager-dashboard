@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button, TextField, Typography, Container } from "@material-ui/core";
+import api from '../../services/api';
+import { login } from '../../services/auth';
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -8,8 +10,61 @@ import ShowMessage from "../../components/ShowMessage";
 
 export default function Login() {
   const [loginOK, setLoginOk] = useState(false);
+  const [apelido, setApelido] = useState('');
+  const [senha, setSenha] = useState('');
 
   const classes = useStyles();
+
+  const isValid = () => {
+    if (apelido.trim() === '') {
+      console.log('Preencha o apelido');
+      return false;
+    }
+    if (senha.trim() === '') {
+      console.log('Preencha a senha');
+      return false;
+    }
+    return true;
+  };
+
+  const handleLogin = e => {
+    e.preventDefault()
+    // setLoginOk(true);
+
+    if (isValid()) {
+
+      api.post('login', {
+          apelido: apelido,
+          senha: senha,
+        })
+        .then(res => {
+          const token = res.data.token;
+          login(token)
+          // verificar necessidade posterior
+          // api.get(`motoristas/${res.data.id}`, {
+          //     headers: {
+          //       Authorization: `Bearer ${token}`,
+          //     },
+          //   })
+          //   .then(motorista => {
+          //     // salvar no localStorage
+          //     user.id = motorista.data.id;
+          //     user.nome = motorista.data.nome;
+          //     user.token = token;
+          //     user.permissoes = motorista.data.permissoes;
+
+          //     console.log(user);
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    // setLoginOk(false);
+  }
 
   return (
     <div>
@@ -29,6 +84,7 @@ export default function Login() {
               label="Apelido"
               name="apelido"
               autoFocus
+              onChange={e => setApelido(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -40,13 +96,11 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={e => setSenha(e.target.value)}
             />
             <div>
               <Button
-                onClick={(a) => {
-                  a.preventDefault();
-                  setLoginOk(true);
-                }}
+                onClick={e => handleLogin(e) }
                 type="submit"
                 fullWidth
                 variant="contained"
