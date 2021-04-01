@@ -6,7 +6,7 @@ import Footer from "../../components/Footer";
 
 import api from '../../services/api';
 
-export default function Home() {
+export default function Home(props) {
     const [viagem, setViagem] = useState(null);
 
     useEffect(() => {
@@ -50,7 +50,7 @@ export default function Home() {
             ) : (
             <div>
                 <Button
-                    onClick={e => console.log('pegar veiculo...') }
+                    onClick={e => props.history.push('/escolher-veiculo') }
                     fullWidth
                     variant="contained"
                     color="primary">
