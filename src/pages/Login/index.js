@@ -8,7 +8,7 @@ import Footer from "../../components/Footer";
 import useStyles from "./styles";
 import ShowMessage from "../../components/ShowMessage";
 
-export default function Login() {
+export default function Login(props) {
   const [loginOK, setLoginOk] = useState(false);
   const [apelido, setApelido] = useState('');
   const [senha, setSenha] = useState('');
@@ -39,7 +39,8 @@ export default function Login() {
         })
         .then(res => {
           const token = res.data.token;
-          login(token)
+          login(token);
+          props.history.push('/home');
           // verificar necessidade posterior
           // api.get(`motoristas/${res.data.id}`, {
           //     headers: {
