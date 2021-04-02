@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, Typography, Container } from "@material-ui/core";
+import { Button, TextField, Container } from "@material-ui/core";
 
 import api from '../../services/api';
 import { isAuthenticated, login } from '../../services/auth';
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Title from '../../components/Title';
 import useStyles from "./styles";
 //import ShowMessage from "../../components/ShowMessage";
 
@@ -79,9 +80,8 @@ export default function Login(props) {
       <Header />
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
+          <Title title='Login' />
+          
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"

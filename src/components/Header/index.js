@@ -7,17 +7,18 @@ import {
   Badge,
   MenuItem,
   Menu,
-  Button,
+  Button
 } from "@material-ui/core";
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
 
 import useStyles from "./styles";
+import { Link } from "react-router-dom";
+import { isAuthenticated } from "../../services/auth";
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -39,9 +40,9 @@ export default function PrimarySearchAppBar() {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+  // const handleMobileMenuOpen = (event) => {
+  //   setMobileMoreAnchorEl(event.currentTarget);
+  // };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -112,9 +113,11 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography className={classes.title} variant="h6" noWrap>
-            Viagens PMO
-          </Typography>
+          <Link to="/home" className={classes.title}>
+            <Typography className={classes.title} variant="h6" noWrap>
+              Viagens PMO
+            </Typography>
+          </Link>
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -140,9 +143,19 @@ export default function PrimarySearchAppBar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton> */}
-            <Button variant="outlined" color="secondary" href="/">
-              Login
+            {isAuthenticated() ? (
+              <Button variant="outlined" color="secondary" >
+                <Link to="/logout" className={classes.title}>
+                  Sair
+                </Link>
             </Button>
+            ) : (
+              <Button variant="outlined" color="secondary" >
+                <Link to="/" className={classes.title}>
+                  Login
+                </Link>
+              </Button>
+            )}
 
             {/* <IconButton
               edge="end"
@@ -155,7 +168,7 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton> */}
           </div>
-          <div className={classes.sectionMobile}>
+          {/* <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
               // aria-controls={mobileMenuId}
@@ -165,7 +178,7 @@ export default function PrimarySearchAppBar() {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

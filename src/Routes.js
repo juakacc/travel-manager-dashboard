@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
-import { isAuthenticated } from './services/auth';
+import { isAuthenticated, logout } from './services/auth';
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -19,6 +19,12 @@ const PrivateRoute = ({ component: Component }) => (
       )} />
 );
 
+const Logout = props => {
+  logout();
+  props.history.push('/');
+  return null;
+}
+
 export default function Routes() {
   return (
     <BrowserRouter>
@@ -28,6 +34,7 @@ export default function Routes() {
         <PrivateRoute path="/escolher-veiculo" component={EscolherVeiculo} />
         <PrivateRoute path="/iniciar-viagem" component={IniciarViagem} />
         <PrivateRoute path="/concluir-viagem" component={ConcluirViagem} />
+        <Route path="/logout" component={Logout} />
       </Switch>
     </BrowserRouter>
   );

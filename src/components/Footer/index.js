@@ -14,7 +14,6 @@ export default function Copyright() {
           Viagens PMO
         </Link>{" "}
         {new Date().getFullYear()}
-        {"."}
       </Typography>
     </footer>
   );

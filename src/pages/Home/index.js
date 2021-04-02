@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Typography, Container } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 import api from '../../services/api';
+import Title from "../../components/Title";
 
 export default function Home(props) {
     const [viagem, setViagem] = useState(null);
@@ -25,9 +26,7 @@ export default function Home(props) {
       <Header />
       <Container component="main" maxWidth="xs">
         <div>
-          <Typography component="h1" variant="h5">
-            Bem-vindo, usuário.
-          </Typography>
+          <Title title='Bem-vindo,' />
 
           {viagem ? (
             <div>

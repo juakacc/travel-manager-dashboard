@@ -9,6 +9,8 @@ export default makeStyles((theme) => ({
   },
   title: {
     display: "block",
+    color: theme.palette.common.white,
+    "text-decoration": "none"
     // [theme.breakpoints.up("sm")]: {
     //   display: "block",
     // },
@@ -51,7 +53,7 @@ export default makeStyles((theme) => ({
     },
   },
   sectionDesktop: {
-    display: "none",
+    display: "flex",
     [theme.breakpoints.up("md")]: {
       display: "flex",
     },

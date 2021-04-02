@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Typography, Container } from "@material-ui/core";
+import { Container, List, ListItemIcon, ListItem, ListItemText } from "@material-ui/core";
+import ChevronRight from '@material-ui/icons/ChevronRight';
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 import api from '../../services/api';
+import Title from "../../components/Title";
 
 export default function EscolherVeiculo(props) {
   const [veiculos, setVeiculos] = useState([]);
@@ -21,13 +23,12 @@ export default function EscolherVeiculo(props) {
   useEffect(() => {
     api.get('veiculos/disponiveis')
       .then(res => {
-        console.log(res.data);
         setVeiculos(res.data);
-    })
-    .catch(err => {
-        console.log(err);
-        setVeiculos([]);
-    });
+      })
+      .catch(err => {
+          console.log(err);
+          setVeiculos([]);
+      });
   }, []);
 
   return (
@@ -35,25 +36,22 @@ export default function EscolherVeiculo(props) {
       <Header />
       <Container component="main" maxWidth="xs">
         <div>
-          <Typography component="h1" variant="h5">
-            Escolha um veículo:
-          </Typography>
+          <Title title="Escolha um veículo" />
+          <List>
             {veiculos.map(v => (
-                <Button
-                    onClick={e => {
-                        console.log(v.id);
-                        props.history.push({
-                          pathname: '/iniciar-viagem',
-                          state: { idVeiculo: v.id }
-                        });
-                    }}
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    key={v.id} >
-                    {v.nome}
-                </Button>
-            ))}          
+              <ListItem button key={v.id} component="button" onClick={() => {
+                  props.history.push({
+                    pathname: '/iniciar-viagem',
+                    state: { idVeiculo: v.id }
+                  });
+                }}>
+                <ListItemIcon>
+                  <ChevronRight />
+                </ListItemIcon>
+                <ListItemText primary={v.nome} />
+              </ListItem>
+            ))}
+          </List>          
         </div>
       </Container>
       <Footer />

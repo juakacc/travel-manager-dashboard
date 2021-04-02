@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, Typography, Container } from "@material-ui/core";
+import { Button, TextField, Container } from "@material-ui/core";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import useStyles from './styles';
 
 import api from '../../services/api';
+import Title from "../../components/Title";
 
 export default function IniciarViagem(props) {
     const [veiculoNome, setVeiculoNome] = useState('');
@@ -73,9 +74,7 @@ export default function IniciarViagem(props) {
       <Header />
       <Container component="main" maxWidth="xs">
         <div>
-          <Typography component="h1" variant="h5">
-            Iniciar Viagem
-          </Typography>
+          <Title title='Iniciar Viagem' />
 
           <h2>Veículo: {veiculoNome}</h2>
 

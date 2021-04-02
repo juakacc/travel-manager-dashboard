@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, Typography, Container, Checkbox, FormControlLabel } from "@material-ui/core";
+import { Button, TextField, Container, Checkbox, FormControlLabel } from "@material-ui/core";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import useStyles from './styles';
 
 import api from '../../services/api';
+import Title from "../../components/Title";
 
 export default function ConcluirViagem(props) {
     const [viagemId, setViagemId] = useState(0);
@@ -83,9 +84,7 @@ export default function ConcluirViagem(props) {
       <Header />
       <Container component="main" maxWidth="xs">
         <div>
-          <Typography component="h1" variant="h5">
-            Concluir Viagem
-          </Typography>
+          <Title title='Concluir Viagem' />
 
           <h2>Viagem: #{viagemId}</h2>
 
