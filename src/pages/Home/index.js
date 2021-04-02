@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container } from "@material-ui/core";
-
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import { Button } from "@material-ui/core";
 
 import api from '../../services/api';
 import Title from "../../components/Title";
+import PageDefault from "../../components/PageDefault";
 
 export default function Home(props) {
     const [viagem, setViagem] = useState(null);
@@ -22,46 +20,40 @@ export default function Home(props) {
     }, []);
 
   return (
-    <div>
-      <Header />
-      <Container component="main" maxWidth="xs">
+    <PageDefault>
+      <Title title='Bem-vindo,' />
+
+      {viagem ? (
         <div>
-          <Title title='Bem-vindo,' />
+            <h2>Veículo que está com você:</h2>
+            <p>{viagem.veiculo.nome}</p>
+            <Button
+                onClick={e => props.history.push('/concluir-viagem') }
+                fullWidth
+                variant="contained"
+                color="primary">
+                Entregar Veículo
+            </Button>
 
-          {viagem ? (
             <div>
-                <h2>Veículo que está com você:</h2>
-                <p>{viagem.veiculo.nome}</p>
-                <Button
-                    onClick={e => props.history.push('/concluir-viagem') }
-                    fullWidth
-                    variant="contained"
-                    color="primary">
-                    Entregar Veículo
-                </Button>
-
-                <div>
-                    <p>Detalhes da viagem <b>#{viagem.id}</b></p>
-                    <p>Momento da saída: <b>{viagem.saida}</b></p>
-                    <p>KM registrado na saída: <b>{viagem.km_inicial} KM</b></p>
-                </div>
+                <p>Detalhes da viagem <b>#{viagem.id}</b></p>
+                <p>Momento da saída: <b>{viagem.saida}</b></p>
+                <p>KM registrado na saída: <b>{viagem.km_inicial} KM</b></p>
             </div>
-            ) : (
-            <div>
-                <Button
-                    onClick={e => props.history.push('/escolher-veiculo') }
-                    fullWidth
-                    variant="contained"
-                    color="primary">
-                    Pegar Veículo
-                </Button>
-
-                <p>Sem viagem no momento...</p>
-            </div>
-            )}
         </div>
-      </Container>
-      <Footer />
-    </div>
+        ) : (
+        <div>
+            <Button
+                onClick={e => props.history.push('/escolher-veiculo') }
+                fullWidth
+                variant="contained"
+                color="primary">
+                Pegar Veículo
+            </Button>
+
+            <p>Sem viagem no momento...</p>
+        </div>
+        )}
+    </PageDefault>
   );
 }
