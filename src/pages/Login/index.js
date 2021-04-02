@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, TextField, Typography, Container } from "@material-ui/core";
+
 import api from '../../services/api';
-import { login } from '../../services/auth';
+import { isAuthenticated, login } from '../../services/auth';
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -14,6 +15,12 @@ export default function Login(props) {
   const [senha, setSenha] = useState('');
 
   const classes = useStyles();
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      props.history.push('/home');
+    }
+  }, [props])
 
   const isValid = () => {
     if (apelido.trim() === '') {
