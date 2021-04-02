@@ -34,7 +34,7 @@ export default function Home(props) {
                 <h2>Veículo que está com você:</h2>
                 <p>{viagem.veiculo.nome}</p>
                 <Button
-                    onClick={e => console.log('pegar veiculo...') }
+                    onClick={e => props.history.push('/concluir-viagem') }
                     fullWidth
                     variant="contained"
                     color="primary">

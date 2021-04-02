@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import EscolherVeiculo from "./pages/EscolherVeiculo";
 import IniciarViagem from "./pages/IniciarViagem";
+import ConcluirViagem from "./pages/ConcluirViagem";
 
 const PrivateRoute = ({ component: Component }) => (
   <Route
@@ -26,6 +27,7 @@ export default function Routes() {
         <PrivateRoute path="/home" component={Home} />
         <PrivateRoute path="/escolher-veiculo" component={EscolherVeiculo} />
         <PrivateRoute path="/iniciar-viagem" component={IniciarViagem} />
+        <PrivateRoute path="/concluir-viagem" component={ConcluirViagem} />
       </Switch>
     </BrowserRouter>
   );
