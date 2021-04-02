@@ -32,7 +32,7 @@ export default function ConcluirViagem(props) {
           console.log('sem viagens no momento...');
           props.history.goBack();
         });
-    }, []);
+    }, [props]);
 
     const isValid = () => {
 

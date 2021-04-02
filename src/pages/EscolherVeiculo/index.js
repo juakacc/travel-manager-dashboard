@@ -16,7 +16,7 @@ export default function EscolherVeiculo(props) {
         props.history.goBack();
       })
       .catch(err => {});
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     api.get('veiculos/disponiveis')

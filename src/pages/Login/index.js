@@ -6,10 +6,10 @@ import { login } from '../../services/auth';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import useStyles from "./styles";
-import ShowMessage from "../../components/ShowMessage";
+//import ShowMessage from "../../components/ShowMessage";
 
 export default function Login(props) {
-  const [loginOK, setLoginOk] = useState(false);
+  //const [loginOK, setLoginOk] = useState(false);
   const [apelido, setApelido] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -113,7 +113,7 @@ export default function Login(props) {
             </div>
           </form>
         </div>
-        {loginOK && <ShowMessage />}
+        { /* loginOK && <ShowMessage /> */}
       </Container>
       <Footer />
     </div>

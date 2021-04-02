@@ -11,7 +11,7 @@ export default function IniciarViagem(props) {
     const [veiculoNome, setVeiculoNome] = useState('');
     const [quilometragem, setQuilometragem] = useState(0);
     const [descricao, setDescricao] = useState('');
-    const [idVeiculo, setIdVeiculo] = useState(props.location.state?.idVeiculo);
+    const [idVeiculo] = useState(props.location.state?.idVeiculo);
 
     const classes = useStyles();
 
@@ -34,7 +34,7 @@ export default function IniciarViagem(props) {
         //this.props.setMensagem('Veículo inválido');
         props.history.goBack();
       }
-    }, []);
+    }, [props, idVeiculo]);
 
     const isValid = () => {
         
