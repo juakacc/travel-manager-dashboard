@@ -7,19 +7,28 @@ import Footer from "../../components/Footer";
 import api from '../../services/api';
 
 export default function EscolherVeiculo(props) {
-    const [veiculos, setVeiculos] = useState([]);
+  const [veiculos, setVeiculos] = useState([]);
 
-    useEffect(() => {
-        api.get('veiculos/disponiveis')
-            .then(res => {
-                console.log(res.data);
-                setVeiculos(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-                setVeiculos([]);
-            });
-    }, []);
+  useEffect(() => {
+    api.get(`viagens/atual`)
+      .then(() => {
+        console.log('Você já está com uma viagem ativa...');
+        props.history.goBack();
+      })
+      .catch(err => {});
+  }, []);
+
+  useEffect(() => {
+    api.get('veiculos/disponiveis')
+      .then(res => {
+        console.log(res.data);
+        setVeiculos(res.data);
+    })
+    .catch(err => {
+        console.log(err);
+        setVeiculos([]);
+    });
+  }, []);
 
   return (
     <div>
@@ -33,7 +42,10 @@ export default function EscolherVeiculo(props) {
                 <Button
                     onClick={e => {
                         console.log(v.id);
-                        props.history.push('/iniciar-viagem');
+                        props.history.push({
+                          pathname: '/iniciar-viagem',
+                          state: { idVeiculo: v.id }
+                        });
                     }}
                     fullWidth
                     variant="contained"
