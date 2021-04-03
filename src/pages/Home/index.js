@@ -9,13 +9,12 @@ export default function Home(props) {
     const [viagem, setViagem] = useState(null);
 
     useEffect(() => {
-        api.get(`viagens/atual`)
+      api.get(`viagens/atual`)
         .then(res => {
             setViagem(res.data);
         })
         .catch(err => {
             setViagem(null);
-            console.log(err);
         });
     }, []);
 

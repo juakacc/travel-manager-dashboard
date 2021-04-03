@@ -7,6 +7,7 @@ import useStyles from './styles';
 
 import api from '../../services/api';
 import Title from "../../components/Title";
+import { useHistory } from "react-router";
 
 export default function IniciarViagem(props) {
     const [veiculoNome, setVeiculoNome] = useState('');
@@ -15,11 +16,11 @@ export default function IniciarViagem(props) {
     const [idVeiculo] = useState(props.location.state?.idVeiculo);
 
     const classes = useStyles();
+    const history = useHistory();
 
     useEffect(() => {
       
       if (idVeiculo) {
-        // const { idVeiculo } = props.location.state;
 
         api.get(`veiculos/${idVeiculo}`)
           .then(res => {
@@ -27,20 +28,18 @@ export default function IniciarViagem(props) {
             setQuilometragem(res.data.quilometragem);
           })
           .catch(err => {
-            //this.props.setMensagem('Veículo inválido');
-            console.log(err);
-            props.history.goBack();
+            window.flash('Veículo não encontrado!');
+            history.push('/home');
           });
       } else {
-        //this.props.setMensagem('Veículo inválido');
-        props.history.goBack();
+        history.push('/home');
       }
-    }, [props, idVeiculo]);
+    }, [history, idVeiculo]);
 
     const isValid = () => {
         
       if (isNaN(quilometragem) || quilometragem <= 0) {
-        console.log('Insira uma quilometragem válida!');
+        window.flash('Insira uma quilometragem válida!');
         setQuilometragem(0);
         return false;
       }
@@ -60,11 +59,11 @@ export default function IniciarViagem(props) {
         api
           .post('viagens', viagem)
           .then(res => {
-            // dispatch(setMensagem('Viagem iniciada. Siga as leis de trânsito'));
+            window.flash('Viagem iniciada!');
             props.history.push('/home');
           })
           .catch(err => {
-            console.log(err);
+            window.flash(err.response.data.mensagem);
           });
       }
     }
@@ -79,7 +78,7 @@ export default function IniciarViagem(props) {
           <h2>Veículo: {veiculoNome}</h2>
 
           <Button
-            onClick={e => props.history.goBack() }
+            onClick={e => history.push('/escolher-veiculo') }
             fullWidth
             variant="contained"
             color="primary">

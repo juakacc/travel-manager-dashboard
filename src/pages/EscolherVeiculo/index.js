@@ -7,18 +7,20 @@ import Footer from "../../components/Footer";
 
 import api from '../../services/api';
 import Title from "../../components/Title";
+import { useHistory } from "react-router";
 
 export default function EscolherVeiculo(props) {
   const [veiculos, setVeiculos] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     api.get(`viagens/atual`)
       .then(() => {
-        console.log('Você já está com uma viagem ativa...');
-        props.history.goBack();
+        window.flash('Você já está viajando...');
+        history.push('/home');
       })
       .catch(err => {});
-  }, [props]);
+  }, [history]);
 
   useEffect(() => {
     api.get('veiculos/disponiveis')
@@ -26,7 +28,7 @@ export default function EscolherVeiculo(props) {
         setVeiculos(res.data);
       })
       .catch(err => {
-          console.log(err);
+          window.flash(err.response.data.mensagem);
           setVeiculos([]);
       });
   }, []);

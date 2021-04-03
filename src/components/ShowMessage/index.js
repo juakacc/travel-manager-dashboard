@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Snackbar, IconButton } from "@material-ui/core";
 
 import CloseIcon from "@material-ui/icons/Close";
+import Bus from "../../services/Bus";
 
 export default function ShowMessage() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [mensagem, setMensagem] = useState('');
+
+  useEffect(() => {
+    Bus.addListener('flash', message => {
+      setOpen(true);
+      setMensagem(message);
+      setTimeout(() => {
+        setOpen(false);
+      }, 4000);
+    })
+  }, [])
 
   const handleClose = () => {
     setOpen(false);
@@ -17,9 +29,9 @@ export default function ShowMessage() {
         horizontal: "left",
       }}
       open={open}
-      autoHideDuration={3000}
+      //autoHideDuration={3000}
       onClose={handleClose}
-      message="Login realizado"
+      message={mensagem}
       action={
         <React.Fragment>
           <IconButton

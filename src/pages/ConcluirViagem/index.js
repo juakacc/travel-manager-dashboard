@@ -7,6 +7,7 @@ import useStyles from './styles';
 
 import api from '../../services/api';
 import Title from "../../components/Title";
+import { useHistory } from "react-router";
 
 export default function ConcluirViagem(props) {
     const [viagemId, setViagemId] = useState(0);
@@ -16,6 +17,7 @@ export default function ConcluirViagem(props) {
     const [sem_movimentacao, setSemMovimentacao] = useState(false);
     
     const classes = useStyles();
+    const history = useHistory();
 
     useEffect(() => {
       api
@@ -29,11 +31,10 @@ export default function ConcluirViagem(props) {
           setKmInicial(km_inicial);
         })
         .catch(err => {
-          console.log(err);
-          console.log('sem viagens no momento...');
-          props.history.goBack();
+          window.flash('Sem viagem no momento!');
+          history.push('/home');
         });
-    }, [props]);
+    }, [history]);
 
     const isValid = () => {
 
@@ -42,42 +43,42 @@ export default function ConcluirViagem(props) {
       }
       
       if (isNaN(quilometragem)) {
-        console.log('Insira uma quilometragem válida!');
+        window.flash('Insira uma quilometragem válida!');
         return false;
       }
       
       if (parseFloat(quilometragem) < parseFloat(kmInicial)) {
-        console.log('A quilometragem final não pode ser menor que a inicial!');
+        window.flash('A quilometragem final não pode ser menor que a inicial!');
         return false;
       }
   
       if (kmInicial === quilometragem) {
-        console.log('Para viagens sem movimentação marque a opção!');
+        window.flash('Para viagens sem movimentação marque a opção!');
         return false;
       }  
       return true;
     };
 
-    const handleSubmit = e => {
-      e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault();
 
-      if (isValid()) {
-        const viagem = {
-          descricao: sem_movimentacao ? `Sem movimentação ${descricao}` : descricao,
-          km_final: quilometragem,
-        }
-
-        api
-          .put(`viagens/${viagemId}`, viagem)
-            .then(() => {
-              console.log('Viagem concluída com sucesso');
-              props.history.push('/home');
-            })
-            .catch(err => {
-              console.log(err);
-            });
+    if (isValid()) {
+      const viagem = {
+        descricao: sem_movimentacao ? `Sem movimentação ${descricao}` : descricao,
+        km_final: quilometragem,
       }
+
+      api
+        .put(`viagens/${viagemId}`, viagem)
+          .then(() => {
+            window.flash('Viagem concluída!');
+            props.history.push('/home');
+          })
+          .catch(err => {
+            window.flash('Ocorreu um erro, tente novamente!');
+          });
     }
+  }
 
   return (
     <div>

@@ -8,10 +8,8 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Title from '../../components/Title';
 import useStyles from "./styles";
-//import ShowMessage from "../../components/ShowMessage";
 
 export default function Login(props) {
-  //const [loginOK, setLoginOk] = useState(false);
   const [apelido, setApelido] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -25,11 +23,11 @@ export default function Login(props) {
 
   const isValid = () => {
     if (apelido.trim() === '') {
-      console.log('Preencha o apelido');
+      window.flash('Preencha o apelido');
       return false;
     }
     if (senha.trim() === '') {
-      console.log('Preencha a senha');
+      window.flash('Preencha a senha');
       return false;
     }
     return true;
@@ -37,7 +35,6 @@ export default function Login(props) {
 
   const handleLogin = e => {
     e.preventDefault()
-    // setLoginOk(true);
 
     if (isValid()) {
 
@@ -49,30 +46,11 @@ export default function Login(props) {
           const token = res.data.token;
           login(token);
           props.history.push('/home');
-          // verificar necessidade posterior
-          // api.get(`motoristas/${res.data.id}`, {
-          //     headers: {
-          //       Authorization: `Bearer ${token}`,
-          //     },
-          //   })
-          //   .then(motorista => {
-          //     // salvar no localStorage
-          //     user.id = motorista.data.id;
-          //     user.nome = motorista.data.nome;
-          //     user.token = token;
-          //     user.permissoes = motorista.data.permissoes;
-
-          //     console.log(user);
-          //   })
-          //   .catch(err => {
-          //     console.log(err);
-          //   });
         })
         .catch(err => {
-          console.log(err);
+          window.flash(err.response.data.mensagem);
         });
     }
-    // setLoginOk(false);
   }
 
   return (
@@ -120,7 +98,6 @@ export default function Login(props) {
             </div>
           </form>
         </div>
-        { /* loginOK && <ShowMessage /> */}
       </Container>
       <Footer />
     </div>
