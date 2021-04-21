@@ -38,8 +38,8 @@ export default function Login(props) {
     if (isValid()) {
 
       api.post('login', {
-          apelido: apelido,
-          senha: senha,
+          apelido: apelido.toLowerCase(),
+          senha,
         })
         .then(res => {
           const token = res.data.token;
@@ -66,7 +66,8 @@ export default function Login(props) {
           label="Apelido"
           name="apelido"
           autoFocus
-          onChange={e => setApelido(e.target.value)}
+          value={apelido}
+          onChange={e => setApelido(e.target.value.toLowerCase())}
         />
         <TextField
           variant="outlined"
@@ -77,6 +78,7 @@ export default function Login(props) {
           label="Senha"
           type="password"
           id="password"
+          value={senha}
           autoComplete="current-password"
           onChange={e => setSenha(e.target.value)}
         />
